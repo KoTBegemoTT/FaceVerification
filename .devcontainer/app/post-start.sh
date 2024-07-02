@@ -22,6 +22,3 @@ poetry completions zsh > ~/.oh-my-zsh/plugins/poetry/_poetry
 
 poetry install --all-extras --compile --no-root
 
-# Нужно для работы deepface. Автоматически подтверждает установку.
-apt-get update && yes | apt-get install libgl1
-yes | sudo apt-get install libglib2.0-0
