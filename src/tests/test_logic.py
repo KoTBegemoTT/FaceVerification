@@ -9,11 +9,11 @@ class TestFaceVerification:
         [
             pytest.param(
                 'src/tests/images/image_for_vectorise.jpeg',
-                id='first_image',
+                id='jpeg_image',
             ),
             pytest.param(
                 'src/tests/images/image_for_vectorise_2.png',
-                id='second_image',
+                id='png_image',
             ),
         ],
     )
