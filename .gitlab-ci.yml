@@ -31,8 +31,8 @@ pytest-and-coverage:
   stage: test
   image: $CONTAINER_IMAGE
   before_script:
-    - apt-get update && yes | apt-get install libgl1
-    - apt-get update && yes | apt-get install libglib2.0-0
+    - apt-get update -yqq
+    - apt-get install -yqq libgl1-mesa-glx
   script:
     - poetry run coverage run
     - poetry run coverage json
