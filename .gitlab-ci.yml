@@ -3,7 +3,7 @@ stages:
   - test
 
 variables:
-  CONTAINER_IMAGE: python:3.12-slim
+  CONTAINER_IMAGE: python:3.12
 
 before_script:
   - pip install poetry
@@ -57,7 +57,7 @@ pytest-and-coverage:
     - poetry install
   script:
     - poetry run coverage run
-    - poetry run coverage json
+    - poetry run coverage json -i
     - poetry run coverage-threshold --line-coverage-min=90  --file-line-coverage-min=60
   rules:
   - if: $CI_PIPELINE_SOURCE == "push"
