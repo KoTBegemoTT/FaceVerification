@@ -33,6 +33,8 @@ pytest-and-coverage:
   before_script:
     - apt-get update -yqq
     - apt-get install -yqq libgl1-mesa-glx
+    - pip install poetry
+    - poetry install
   script:
     - poetry run coverage run
     - poetry run coverage json
