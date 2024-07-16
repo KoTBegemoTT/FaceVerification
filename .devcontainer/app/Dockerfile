@@ -7,4 +7,5 @@ COPY .p10k.zsh /root/
 COPY .zshrc /root/
 
 # Нужно для работы deepface. Автоматически подтверждает установку.
-RUN apt-get update -yqq && apt-get install -yqq libgl1-mesa-glx
+RUN apt-get update && yes | apt-get install libgl1
+RUN apt-get update && yes | apt-get install libglib2.0-0
