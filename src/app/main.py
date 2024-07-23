@@ -1,7 +1,7 @@
 import uvicorn
 from fastapi import FastAPI
 
-from app.face_verification.urls import router as verification_router
+from app.face_verification.urls import router as verification_router  # type: ignore
 
 app = FastAPI()
 app.include_router(verification_router)
