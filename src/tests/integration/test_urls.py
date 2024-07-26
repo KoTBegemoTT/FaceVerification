@@ -15,8 +15,9 @@ from fastapi import status
         ),
     ],
 )
-def test_get_vector(test_client, path):
-    response = test_client.get('/get_vector/', params={'path': path})
+@pytest.mark.asyncio
+async def test_get_vector(ac, path):
+    response = await ac.get('/get_vector/', params={'path': path})
 
     assert response.status_code == status.HTTP_200_OK
     assert isinstance(response.json(), list)

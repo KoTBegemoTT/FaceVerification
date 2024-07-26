@@ -16,8 +16,9 @@ from app.face_verification.views import image_to_vector
         ),
     ],
 )
-def test_image_to_vetor_convert(path):
-    embedding = image_to_vector(path)
+@pytest.mark.asyncio
+async def test_image_to_vetor_convert(path):
+    embedding = await image_to_vector(path)
 
     assert isinstance(embedding, list)
     assert len(embedding) == 128
@@ -30,6 +31,7 @@ def test_image_to_vetor_convert(path):
         pytest.param(10001, ValueError, id='wrong_path_type'),
     ],
 )
-def test_image_to_vetor_fail(path, error):
+@pytest.mark.asyncio
+async def test_image_to_vetor_fail(path, error):
     with pytest.raises(error):
-        image_to_vector(path)
+        await image_to_vector(path)
