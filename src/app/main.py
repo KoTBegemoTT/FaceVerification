@@ -1,12 +1,10 @@
 import uvicorn
 from fastapi import FastAPI
 
-from app.face_verification.urls import (
-    router as verification_router,  # type: ignore
-)
+from app.face_verification.urls import router  # type: ignore
 
 app = FastAPI()
-app.include_router(verification_router)
+app.include_router(router)
 
 
 @app.get('/')
