@@ -22,3 +22,11 @@ async def test_get_vector(ac, path):
     assert response.status_code == status.HTTP_200_OK
     assert isinstance(response.json(), list)
     assert len(response.json()) == 128
+
+
+@pytest.mark.asyncio
+async def test_check_ready(ac):
+    response = await ac.get('/healthz/ready/')
+
+    assert response.status_code == status.HTTP_200_OK
+    assert response.json()
