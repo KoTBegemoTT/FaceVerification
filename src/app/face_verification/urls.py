@@ -9,9 +9,9 @@ router = APIRouter(tags=['face_verification'])
     '/healthz/ready/',
     status_code=status.HTTP_200_OK,
 )
-async def ready_check() -> bool:
+async def ready_check() -> None:
     """Проверка состояния сервиса."""
-    return True
+    return None
 
 
 @router.get(

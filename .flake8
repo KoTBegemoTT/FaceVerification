@@ -7,5 +7,7 @@ ignore =
     DAR401,
     # Missing docstring in public package
     D104,
+    # Found inconsistent `return` statement
+    WPS324,
     # Found using `@staticmethod`
     WPS602,
