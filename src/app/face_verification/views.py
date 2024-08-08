@@ -1,5 +1,7 @@
+import hashlib
 from deepface import DeepFace  # type: ignore
-
+from aiokafka import AIOKafkaConsumer
+import brotli
 
 async def image_to_vector(path: str) -> list[float]:
     """Функция превращает изображение в вектор."""
