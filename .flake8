@@ -7,6 +7,10 @@ ignore =
     DAR401,
     # Missing docstring in public package
     D104,
+    #  Found too many local variables
+    WPS210,
+    #  Found `f` string
+    WPS305,
     # Found inconsistent `return` statement
     WPS324,
     # Found using `@staticmethod`

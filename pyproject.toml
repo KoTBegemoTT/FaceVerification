@@ -40,6 +40,9 @@ testpaths = ["src/tests"]
 [tool.coverage.run]
 command_line = "-m pytest"
 
+[tool.mypy]
+disable_error_code = 'import-untyped'
+
 [build-system]
 requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"

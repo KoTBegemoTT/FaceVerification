@@ -1,11 +1,8 @@
 import asyncio
 from contextlib import asynccontextmanager
-import hashlib
-import logging
+
 import uvicorn
 from fastapi import FastAPI
-from aiokafka import AIOKafkaConsumer
-import brotli
 
 from app.external.kafka import consume, create_consumer
 from app.face_verification.urls import router  # type: ignore
@@ -13,6 +10,7 @@ from app.face_verification.urls import router  # type: ignore
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
+    """Настройки запуска и остановки сервиса."""
     consumer = await create_consumer()
     await consumer.start()
     asyncio.create_task(consume(consumer))

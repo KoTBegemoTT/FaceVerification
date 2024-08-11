@@ -1,5 +1,7 @@
 [flake8]
 ignore =
+    # Found wrong variable name: value
+    WPS110,
     # Found too short name
     WPS111,
     # Found string literal over-use
@@ -16,12 +18,16 @@ ignore =
     WPS442,
     # Found imports collision
     WPS458,
+    # Found nested function
+    WPS430,
     # Missing docstrings
     D100,
     D101,
     D102,
     D103,
     D104,
+    D105,
+    D107,
     # Use of assert detected
     S101,
     # trailing comma prohibited
