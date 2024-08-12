@@ -6,7 +6,7 @@ from aiokafka import AIOKafkaConsumer
 from app.config import settings
 from app.face_verification.views import image_to_vector
 
-log = logging.getLogger('verification')
+log = logging.getLogger('uvicorn')
 
 verificated_users: set[int] = set()
 
@@ -34,15 +34,3 @@ async def consume(consumer: AIOKafkaConsumer) -> None:
 
         vector = await image_to_vector(file_path)
         log.info(f'{user_id=} {vector=}')
-
-# async def consume(consumer: AIOKafkaConsumer) -> None:
-#     """Обработка сообщения из кафки."""
-#     async for msg in consumer:
-#         mesage = await decompress(msg.value)
-#         user_id_str, file_path = mesage.split(':')
-#         user_id = int(user_id_str)
-
-#         verificated_users.add(user_id)
-
-#         vector = await image_to_vector(file_path)
-#         log.info(f'{user_id=} {vector=}')
