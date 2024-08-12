@@ -51,22 +51,22 @@ async def test_decompress():
     [
         pytest.param(
             [
-                Mock(value='1:src/tests/images/image_for_vectorise.jpeg'),
+                Mock(key=1, value='src/tests/images/image_for_vectorise.jpeg'),
             ],
             {1},
             id='users_one',
         ),
         pytest.param(
             [
-                Mock(value='2:src/tests/images/image_for_vectorise.jpeg'),
+                Mock(key=2, value='src/tests/images/image_for_vectorise.jpeg'),
             ],
             {2},
             id='users_two',
         ),
         pytest.param(
             [
-                Mock(value='1:src/tests/images/image_for_vectorise.jpeg'),
-                Mock(value='2:src/tests/images/image_for_vectorise.jpeg'),
+                Mock(key=1, value='src/tests/images/image_for_vectorise.jpeg'),
+                Mock(key=2, value='src/tests/images/image_for_vectorise.jpeg'),
             ],
             {1, 2},
             id='two_messages',
