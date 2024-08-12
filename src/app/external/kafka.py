@@ -25,7 +25,7 @@ async def decompress(file_bytes: bytes) -> str:
 
 
 async def consume(consumer: AIOKafkaConsumer) -> None:
-    """Обработка сообщения из кафки."""
+    """Обработка сообщений из кафки."""
     async for msg in consumer:
         file_path = await decompress(msg.value)
         user_id = int(await decompress(msg.key))

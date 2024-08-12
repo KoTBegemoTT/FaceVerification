@@ -5,7 +5,7 @@ import uvicorn
 from fastapi import FastAPI
 
 from app.external.kafka import consume, create_consumer
-from app.face_verification.urls import router  # type: ignore
+from app.face_verification.urls import router
 
 
 @asynccontextmanager
@@ -32,7 +32,7 @@ async def root():
 if __name__ == '__main__':
     uvicorn.run(
         'main:app',
-        workers=2,
+        workers=1,
         reload=True,
         host='0.0.0.0',  # noqa: S104
         port=8003,  # noqa: WPS432

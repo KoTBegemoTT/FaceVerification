@@ -1,6 +1,6 @@
 from fastapi import APIRouter, status
 
-from app.face_verification.views import image_to_vector  # type: ignore
+from app.face_verification.views import image_to_vector
 
 router = APIRouter(tags=['face_verification'])
 
