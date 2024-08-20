@@ -4,6 +4,8 @@ import brotli
 from aiokafka import AIOKafkaConsumer
 
 from app.config import settings
+from app.db.crud import set_user_verified
+from app.db.db_helper import db_helper
 from app.face_verification.views import image_to_vector
 
 log = logging.getLogger('uvicorn')
@@ -30,7 +32,8 @@ async def consume(consumer: AIOKafkaConsumer) -> None:
         file_path = await decompress(msg.value)
         user_id = int(await decompress(msg.key))
 
-        verificated_users.add(user_id)
-
         vector = await image_to_vector(file_path)
+        async with db_helper.session_factory() as session:
+            await set_user_verified(user_id, vector, session)
+
         log.info(f'{user_id=} {vector=}')

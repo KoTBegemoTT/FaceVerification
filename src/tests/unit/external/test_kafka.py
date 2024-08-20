@@ -6,12 +6,8 @@ import pytest
 from aiokafka import AIOKafkaConsumer
 
 from app.config import settings
-from app.external.kafka import (
-    consume,
-    create_consumer,
-    decompress,
-    verificated_users,
-)
+from app.db.models import User
+from app.external.kafka import consume, create_consumer, decompress
 
 
 class ConsumerMock:
@@ -47,34 +43,23 @@ async def test_decompress():
 
 
 @pytest.mark.parametrize(
-    'messages, users',
+    'message_value',
     [
         pytest.param(
-            [
-                Mock(key=1, value='src/tests/images/image_for_vectorise.jpeg'),
-            ],
-            {1},
+            'src/tests/images/image_for_vectorise.jpeg',
             id='users_one',
-        ),
-        pytest.param(
-            [
-                Mock(key=2, value='src/tests/images/image_for_vectorise.jpeg'),
-            ],
-            {2},
-            id='users_two',
-        ),
-        pytest.param(
-            [
-                Mock(key=1, value='src/tests/images/image_for_vectorise.jpeg'),
-                Mock(key=2, value='src/tests/images/image_for_vectorise.jpeg'),
-            ],
-            {1, 2},
-            id='two_messages',
         ),
     ],
 )
+@pytest.mark.usefixtures('reset_db')
 @pytest.mark.asyncio
-async def test_consume(monkeypatch, clear, caplog, messages, users):
+async def test_consume(
+    message_value,
+    monkeypatch,
+    caplog,
+    user,
+    db_helper,
+):
     caplog.set_level(logging.INFO)
 
     async def decompress_mock(message: str) -> str:
@@ -85,8 +70,20 @@ async def test_consume(monkeypatch, clear, caplog, messages, users):
         decompress_mock,
     )
 
-    await consume(ConsumerMock(messages))
+    monkeypatch.setattr(
+        'app.db.db_helper.db_helper.session_factory',
+        db_helper.session_factory,
+    )
 
-    assert verificated_users == users
-    for user_id in users:
-        assert f'user_id={user_id}' in caplog.text
+    message = Mock()
+    message.key = user.id
+    message.value = message_value
+
+    await consume(ConsumerMock([message]))
+
+    async with db_helper.session_factory() as session:
+        founded_user = await session.get(User, user.id)
+
+    assert f'user_id={user.id}' in caplog.text
+    assert founded_user.is_verified
+    assert founded_user.verification_vector

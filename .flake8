@@ -7,11 +7,15 @@ ignore =
     DAR401,
     # Missing docstring in public package
     D104,
+    #  Missing docstring in __init__
+    D107,
     #  Found too many local variables
     WPS210,
     #  Found `f` string
     WPS305,
     # Found inconsistent `return` statement
     WPS324,
+    # Found variables that are only used for `return`
+    WPS331,
     # Found using `@staticmethod`
     WPS602,

@@ -20,6 +20,8 @@ ignore =
     WPS458,
     # Found nested function
     WPS430,
+    # Found block variables overlap
+    WPS440,
     # Missing docstrings
     D100,
     D101,
