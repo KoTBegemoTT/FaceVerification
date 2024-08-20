@@ -7,7 +7,7 @@ class Settings(BaseSettings):
     # Настройки kafka
     kafka_host: str = 'kafka'
     kafka_port: str = '9092'
-    kafka_consumer_topics: str = 'faces'
+    kafka_consumer_topic: str = 'faces'
     file_encoding: str = 'utf-8'
 
     # Настройки db
