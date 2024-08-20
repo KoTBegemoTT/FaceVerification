@@ -8,7 +8,6 @@ class Settings(BaseSettings):
     kafka_host: str = 'kafka'
     kafka_port: str = '9092'
     kafka_consumer_topics: str = 'faces'
-    kafka_instance: str = f'{kafka_host}:{kafka_port}'
     file_encoding: str = 'utf-8'
 
     # Настройки db
@@ -24,5 +23,9 @@ class Settings(BaseSettings):
         """Ссылка на БД."""
         return f'postgresql+asyncpg://{self.db_user}:{self.db_password}@{self.db_host}:{self.db_port}/{self.db_name}'  # noqa: E501, WPS221
 
+    @property
+    def kafka_instance(self) -> str:
+        """Ссылка на kafka."""
+        return f'{self.kafka_host}:{self.kafka_port}'
 
 settings = Settings()
