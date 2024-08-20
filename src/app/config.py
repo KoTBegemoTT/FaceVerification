@@ -28,4 +28,5 @@ class Settings(BaseSettings):
         """Ссылка на kafka."""
         return f'{self.kafka_host}:{self.kafka_port}'
 
+
 settings = Settings()
