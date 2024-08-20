@@ -16,7 +16,7 @@ verificated_users: set[int] = set()
 async def create_consumer() -> AIOKafkaConsumer:
     """Создание объекта KafkaConsumer."""
     return AIOKafkaConsumer(
-        settings.kafka_consumer_topics,
+        settings.kafka_consumer_topic,
         bootstrap_servers=settings.kafka_instance,
     )
 
