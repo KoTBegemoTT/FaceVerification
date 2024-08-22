@@ -6,7 +6,7 @@ import pytest_asyncio
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.db.db_helper import DatabaseHelper
-from app.db.models import Base, User
+from app.db.models import BaseTable, User
 
 TEST_DB_URL = 'postgresql+asyncpg://postgres:postgres@host.docker.internal:5432/test_db'  # noqa: E501
 test_db_helper = DatabaseHelper(url=TEST_DB_URL, echo=True)
@@ -20,10 +20,10 @@ async def override_get_async_session() -> AsyncGenerator[AsyncSession, None]:
 @pytest_asyncio.fixture()
 async def reset_db():
     async with test_db_helper.engine.begin() as conn:
-        await conn.run_sync(Base.metadata.create_all)
+        await conn.run_sync(BaseTable.metadata.create_all)
     yield
     async with test_db_helper.engine.begin() as conn:
-        await conn.run_sync(Base.metadata.drop_all)
+        await conn.run_sync(BaseTable.metadata.drop_all)
 
 
 @pytest.fixture(scope='session')
