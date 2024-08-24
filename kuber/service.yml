@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: lebedev-face-verification-service
+spec:
+  selector:
+    app: lebedev-face-verification
+  ports:
+    - port: 8003
+      targetPort: 8003
