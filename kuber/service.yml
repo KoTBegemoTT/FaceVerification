@@ -6,5 +6,5 @@ spec:
   selector:
     app: lebedev-face-verification
   ports:
-    - port: 8003
-      targetPort: 8003
+  - port: 8003
+    targetPort: 8003

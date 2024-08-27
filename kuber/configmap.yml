@@ -3,6 +3,6 @@ kind: ConfigMap
 metadata:
   name: lebedev-face-verification-configmap
 data:
-  kafka_host: 'infra-kafka-controller-headless'
-  kafka_port: '9092'
-  kafka_consumer_topic: 'lebedev_faces'
+  kafka_host: "infra-kafka-controller-headless"
+  kafka_port: "9092"
+  kafka_consumer_topic: "lebedev_faces"

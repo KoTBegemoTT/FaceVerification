@@ -15,97 +15,88 @@ spec:
         app: lebedev-face-verification
     spec:
       containers:
-        - name: lebedev-face-verification-container
-          image: kotbegemott/face-verification-service:1
-          imagePullPolicy: Always
-          ports:
-            - containerPort: 8003
-          resources:
-            requests:
-              memory: "100Mi"
-              cpu: "200m"
-            limits:
-              memory: "200Mi"
-              cpu: "400m"
-          readinessProbe:
-            httpGet:
-              path: /ready
-              port: 8003
-            initialDelaySeconds: 60
-            periodSeconds: 2
-            successThreshold: 2
-            failureThreshold: 5
-          livenessProbe:
-            httpGet:
-              path: /live
-              port: 8003
-            initialDelaySeconds: 60
-            periodSeconds: 2
-            failureThreshold: 5
-          env:
-            # - name: DB_USER
-            #   valueFrom:
-            #     secretKeyRef:
-            #       name: lebedev-database-secret
-            #       key: db_user
-            # - name: DB_PASSWORD
-            #   valueFrom:
-            #     secretKeyRef:
-            #       name: lebedev-database-secret
-            #       key: db_password
-            # - name: DB_NAME
-            #   valueFrom:
-            #     secretKeyRef:
-            #       name: lebedev-database-secret
-            #       key: db_name
+      - name: lebedev-face-verification-container
+        image: kotbegemott/face-verification-service:1
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 8003
+        resources:
+          requests:
+            memory: "200Mi"
+            cpu: "200m"
+          limits:
+            memory: "400Mi"
+            cpu: "400m"
+        readinessProbe:
+          httpGet:
+            path: /ready
+            port: 8003
+          initialDelaySeconds: 120
+          periodSeconds: 2
+          successThreshold: 2
+          failureThreshold: 5
+        livenessProbe:
+          httpGet:
+            path: /live
+            port: 8003
+          initialDelaySeconds: 120
+          periodSeconds: 2
+          failureThreshold: 5
+        volumeMounts:
+        - name: photos
+          mountPath: /usr/photos
+        env:
+        # Database (private)
+        - name: DB_USER
+          valueFrom:
+            secretKeyRef:
+              name: lebedev-database-secret
+              key: db_user
+        - name: DB_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: lebedev-database-secret
+              key: db_password
+        - name: DB_NAME
+          valueFrom:
+            secretKeyRef:
+              name: lebedev-database-secret
+              key: db_name
 
-            # Database (public)
-            - name: DB_HOST
-              valueFrom:
-                configMapKeyRef:
-                  name: lebedev-database-configmap
-                  key: db_host
-            - name: DB_PORT
-              valueFrom:
-                configMapKeyRef:
-                  name: lebedev-database-configmap
-                  key: db_port
-            - name: DB_SCHEMA
-              valueFrom:
-                configMapKeyRef:
-                  name: lebedev-database-configmap
-                  key: db_schema
+        # Database (public)
+        - name: DB_HOST
+          valueFrom:
+            configMapKeyRef:
+              name: lebedev-database-configmap
+              key: db_host
+        - name: DB_PORT
+          valueFrom:
+            configMapKeyRef:
+              name: lebedev-database-configmap
+              key: db_port
+        - name: DB_SCHEMA
+          valueFrom:
+            configMapKeyRef:
+              name: lebedev-database-configmap
+              key: db_schema
 
-            # Database (should be secret)
-            - name: DB_USER
-              valueFrom:
-                configMapKeyRef:
-                  name: lebedev-database-configmap
-                  key: db_user
-            - name: DB_PASSWORD
-              valueFrom:
-                configMapKeyRef:
-                  name: lebedev-database-configmap
-                  key: db_password
-            - name: DB_NAME
-              valueFrom:
-                configMapKeyRef:
-                  name: lebedev-database-configmap
-                  key: db_name
-
-            # Kafka
-            - name: KAFKA_HOST
-              valueFrom:
-                configMapKeyRef:
-                  name: lebedev-face-verification-configmap
-                  key: kafka_host
-            - name: KAFKA_PORT
-              valueFrom:
-                configMapKeyRef:
-                  name: lebedev-face-verification-configmap
-                  key: kafka_port
-            - name: KAFKA_CONSUMER_TOPIC
-              valueFrom:
-                configMapKeyRef:
-                  name: lebedev-face-verification-configmap
-                  key: kafka_consumer_topic
+        # Kafka
+        - name: KAFKA_HOST
+          valueFrom:
+            configMapKeyRef:
+              name: lebedev-face-verification-configmap
+              key: kafka_host
+        - name: KAFKA_PORT
+          valueFrom:
+            configMapKeyRef:
+              name: lebedev-face-verification-configmap
+              key: kafka_port
+        - name: KAFKA_CONSUMER_TOPIC
+          valueFrom:
+            configMapKeyRef:
+              name: lebedev-face-verification-configmap
+              key: kafka_consumer_topic
+      volumes:
+        - name: photos
+          persistentVolumeClaim:
+            claimName: lebedev-faces-pvc
