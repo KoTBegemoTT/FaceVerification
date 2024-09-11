@@ -19,3 +19,4 @@
 
 - Исходный код проекта: src/app
 - Тесты src/tests
+- Helm чарты ./helm/face-verification
